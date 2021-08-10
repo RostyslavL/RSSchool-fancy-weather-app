@@ -5,6 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fancy Weather App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
 </head>
 <body>
     <main>
@@ -18,13 +22,48 @@
                     class="searchBar__button" 
                     title="submit Location" 
                     aria-label="Enter Zip Code or Country to get  weather conditions"
-                >Submit
+                >
+                <i class="fa fa-search"></i>
+                <i class="fas fa-sync fa-spin"></i>
             </button>
             </form>
         </section>
-        <section id="currenForecast" class="currenForecast"></section>
-        <nav id="navButtons" class="navButtons"></nav>
-        <section id="dailyForecast" class="dailyForecast"></section>
+        <!-- Add accessibility for screen readers -->
+        <a href="#currentForecast" class="skip-link">Skip to Current Forecast</a>
+        <section id="currentForecast" class="currentForecast" role="region" aria-labelledby="currentForecast__location">
+            <h2 id="currentForecast__location" class="currentForecast__location">Current Forecast</h2>
+            <div id="currentForecast__conditions" class="currentForecast__conditions"></div>
+        </section>
+        <!-- Add accessibility for screen readers -->
+        <a href="#dailyForecast" class="skip-link">Skip to Six Day Forecast</a>
+        <nav id="navButtons" class="navButtons">
+            <button id="getLocation" class="button" title="Get location" aria-label="Current Weather Conditions for Your Location">
+                <i class="fa fa-map-marker-alt"></i>
+                <i class="fas fa-sync fa-spin"></i>
+            </button>
+            <button id="home" class="button" title="Home Weather" aria-label="Current Weather Conditions for Your Home Location">
+                <i class="fa fa-home"></i>
+                <i class="fas fa-sync fa-spin"></i>
+            </button>
+            <button id="saveLocation" class="button" title="Save Location" aria-label="Save the current Location">
+                <i class="fa fa-save"></i>
+                <i class="fas fa-sync fa-spin"></i>
+            </button>
+            <button id="units" class="button" title="Toggle Measurement Units" aria-label="Change Units">
+                <i class="fa fa-chart-bar"></i>
+                <i class="fas fa-sync fa-spin"></i>
+            </button>
+            <button id="refresh" class="button" title="Refresh Weather" aria-label="Refresh The Current Weather Conditions">
+                <i class="fa fa-sync-alt"></i>
+                <i class="fas fa-sync fa-spin"></i>
+            </button>
+        </nav>
+        <hr>
+        <section id="dailyForecast" class="dailyForecast" role="region" aria-labelledby="dailyForecast__title">
+            <h2 id="dailyForecast__title" class="dailyForecast__title">Six Day Forecast</h2>
+            <div id="dailyForecast__contents" class="dailyForecast__contents"></div>
+        </section>
+        <p id="confirmation" class="offscreen"aria-live="assessment"></p>
     </main>
 </body>
 </html>
