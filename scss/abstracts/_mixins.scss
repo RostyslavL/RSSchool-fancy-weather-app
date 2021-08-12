@@ -1,10 +1,10 @@
-@mixin flexCenter {
+@mixin flexCenter{
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-@mixin mqWidth($size) {
+@mixin mq($size) {
     @media only screen and(min-width: $size) {
         @content;
     }
@@ -17,7 +17,7 @@
 }
 
 @mixin  mqMaxWidthMinHeight($size1, $size2) {
-    @media only screen and(max-width: $size1) and(max-height: $size2){
+    @media only screen and(max-width: $size1) and (max-height: $size2){
         @content;
     }
 }
