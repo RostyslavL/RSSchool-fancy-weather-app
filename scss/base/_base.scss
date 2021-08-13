@@ -2,9 +2,9 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
+}
   
-  html {
+html {
     background-color: $background-color;
     background-image: url("../img/clouds.jpg");
     background-size: cover;
@@ -17,17 +17,17 @@
     @include mq(768px) {
       font-size: 22px;
     }
-  }
+}
   
-  body {
+body {
     width: 100%;
     min-height: 100vh;
     @include flexCenter;
     flex-direction: column;
     padding: 0.5rem;
-  }
+}
   
-  main {
+main {
     width: 100%;
     max-width: 700px;
     max-height: 1050px;
@@ -39,4 +39,4 @@
     border: 1px solid $border-color;
     border-radius: 10px;
     box-shadow: 1px 1px 2.5px $shadowcolor;
-  }
+}
