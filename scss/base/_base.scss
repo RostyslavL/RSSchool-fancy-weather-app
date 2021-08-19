@@ -8,7 +8,6 @@ html {
     background-color: $background-color;
     background-image: url("../img/clouds.jpg");
     background-size: cover;
-    // background-blend-mode: overlay;
     font-size: 16px;
     font-family: "Montserrat", sans-serif;
     font-weight: bold;
@@ -25,6 +24,7 @@ body {
     @include flexCenter;
     flex-direction: column;
     padding: 0.5rem;
+
 }
   
 main {
@@ -39,6 +39,7 @@ main {
     border: 4px solid $border-color;
     border-radius: 10px;
     box-shadow: 1px 1px 2.5px $shadowcolor;
+    opacity: 0.8;
 }
 
 img{
