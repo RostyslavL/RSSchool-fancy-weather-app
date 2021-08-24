@@ -19,6 +19,12 @@ const initApp = () =>{
     const saveButton = document.getElementById('saveLocation')
     saveButton.addEventListener('click', saveLocation)
 
+    const unitButton = document.getElementById('unit')
+    unitButton.addEventListener('click', setUnitPref)
+
+    const refreshButton = document.getElementById('refresh')
+    refreshButton.addEventListener('click', refreshWheather)
+
     // set up
 
     //load weather
@@ -98,6 +104,19 @@ const saveLocation = () =>{
         localStorage.setItem('defaultWeatherLocation', JSON.stringify(location))
         updateScreenReaderConfirmation(`Succesfully Saved ${currentLoc.getName()} as Your Home Location`)
     }
+}
+
+const setUnitPref = () =>{
+    const unitIcon = document.querySelector('.fa-chart-bar')
+    addSpinner(unitIcon)
+    currentLoc.toggleUnit()
+    updateDataAndDisplay(currentLoc)
+}
+
+const refreshWheather = () =>{
+    const refreshIcon = document.querySelector('.fa-sync-alt')
+    addSpinner(refreshIcon)
+    updateDataAndDisplay(currentLoc)
 }
       
 const updateDataAndDisplay = async (locationObj) =>{
