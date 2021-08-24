@@ -21,7 +21,7 @@ const initApp = () =>{
 document.addEventListener('DOMContentLoaded',initApp)
 
 const getGeoWeather = (event) =>{
-    if(event.type === 'click'){
+    if (event && event.type === "click") {
         //add spinner
         const mapIcon = document.querySelector('.fa-map-marker-alt')
         addSpinner(mapIcon)
@@ -40,7 +40,7 @@ const geoSuccess = (position) => {
       lat: position.coords.latitude,
       lon: position.coords.longitude,
       name: `Lat:${position.coords.latitude} Long:${position.coords.longitude}`
-    };
+    }
     setLocationObject(currentLoc, myCoordsObj)
     updateDataAndDisplay(currentLoc)
     console.log(currentLoc)
@@ -78,6 +78,7 @@ const displayHomeLocationWeather = (home) =>{
 }
       
 const updateDataAndDisplay = async (locationObj) =>{
+    console.log(locationObj)
     // const weatherJson = await getWeatherFromCoords(locationobj)
     // if(weatherJson) updateDisplay(weatherJson, locationObj)
 }
