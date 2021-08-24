@@ -1,16 +1,24 @@
 import CurrentLocation from'./CurrentLocation.js'
-import {addSpinner,displayError} from'./domFunctions.js'
+import {
+    addSpinner,
+    displayError,
+    updateScreenReaderConfirmation
+} from'./domFunctions.js'
 import {setLocationObject, getHomeLocation} from'./dataFunctions.js'
 
 const currentLoc = new CurrentLocation()
 
 const initApp = () =>{
-    // add listeners
+    // add listeners 
     const geoButton = document.getElementById('getLocation')
     geoButton.addEventListener('click', getGeoWeather)
 
     const homeButton = document.getElementById('home')
     homeButton.addEventListener('click', loadWeather)
+
+    const saveButton = document.getElementById('saveLocation')
+    saveButton.addEventListener('click', saveLocation)
+
     // set up
 
     //load weather
@@ -74,6 +82,21 @@ const displayHomeLocationWeather = (home) =>{
         }
         setLocationObject(currentLoc, myCoordsObj)
         updateDataAndDisplay(currentLoc)
+    }
+}
+
+const saveLocation = () =>{
+    if(currentLoc.getLat()  && currentLoc.getLon()){
+        const saveIcon = document.querySelector('.fa-save')
+        addSpinner(saveIcon)
+        const location = {
+            lat: currentLoc.getLat(),
+            lon: currentLoc.getLon(),
+            name: currentLoc.getName(),
+            unit: currentLoc.getUnit(),
+        }
+        localStorage.setItem('defaultWeatherLocation', JSON.stringify(location))
+        updateScreenReaderConfirmation(`Succesfully Saved ${currentLoc.getName()} as Your Home Location`)
     }
 }
       
