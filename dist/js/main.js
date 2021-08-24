@@ -1,6 +1,6 @@
 import CurrentLocation from'./CurrentLocation.js'
 import {addSpinner,displayError} from'./domFunctions.js'
-import {setLocationObject} from'./dataFunctions.js'
+import {setLocationObject, getHomeLocation} from'./dataFunctions.js'
 
 const currentLoc = new CurrentLocation()
 
@@ -10,11 +10,11 @@ const initApp = () =>{
     geoButton.addEventListener('click', getGeoWeather)
 
     const homeButton = document.getElementById('home')
-    // homeButton.addEventListener('click', loadWeather)
+    homeButton.addEventListener('click', loadWeather)
     // set up
 
     //load weather
-    // loadWeather()
+    loadWeather()
     
 }
 
@@ -44,6 +44,37 @@ const geoSuccess = (position) => {
     setLocationObject(currentLoc, myCoordsObj)
     updateDataAndDisplay(currentLoc)
     console.log(currentLoc)
+}
+
+const loadWeather = (event) =>{
+    const savedLocation = getHomeLocation()
+    if(!savedLocation && !event) return getGeoWeather()
+    if(!savedLocation && event.type === 'click'){
+        displayError(
+            'No Home Location Saved',
+            'Please provide Your Home location'
+        )
+    }else if(savedLocation && !event){
+        displayHomeLocationWeather(savedLocation)
+    }else{
+        const homeIcon = document.querySelector('.fa-home')
+        addSpinner(homeIcon)
+        displayHomeLocationWeather(savedLocation)
+    }
+}
+
+const displayHomeLocationWeather = (home) =>{
+    if(typeof home === 'string'){
+        const locationJson = JSON.parse(home)
+        const myCoordsObj = {
+            lat: locationJson.lat,
+            lon: locationJson.lon,
+            name: locationJson.name,
+            unit: locationJson.unit
+        }
+        setLocationObject(currentLoc, myCoordsObj)
+        updateDataAndDisplay(currentLoc)
+    }
 }
       
 const updateDataAndDisplay = async (locationObj) =>{
