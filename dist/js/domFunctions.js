@@ -45,9 +45,26 @@ export const updateScreenReaderConfirmation = (message) => {
 }
 
 export const updateDisplay =(weatherJson, locationObj) => {
+
     fadeDisplay()
+
     clearDisplay()
 
+    const weatherClass = getWeatherClass(weatherJson.current.weather[0].icon)
+
+    setBackgroundImage(weatherClass)
+
+    const screenReaderWeather = buidScreenReaderWeather(weatherJson, locationObj)
+
+    updateScreenReaderConfirmation(screenReaderWeather)
+
+    updateWeatherLocationHeader(locationObj.getName())
+
+    // currentConditions To be displayed:
+
+    // Six Day Forecast To be displayed:
+
+    setFocusOnSearch()
 
     fadeDisplay()
 }
@@ -76,4 +93,49 @@ const deleteContents = (parentElement) => {
         parentElement.removeChild(childEl)
         childEl = parentElement.lastElementChild
     }
+}
+
+const getWeatherClass = (icon) => {
+    const firstTwoChars = icon.slice(0, 2)
+    const lastChar = icon.slice(2)
+    const weatherLookUp = {
+        '09':'snow',
+        '10':'rain',
+        '11':'rain',
+        '13':'snow',
+        '50':'fog',
+    }
+    let weatherClass
+    if(weatherLookUp[firstTwoChars]){
+        weatherClass = weatherLookUp[firstTwoChars]
+    }else if (lastChar === 'd'){ //d - daytime 
+        weatherClass = 'clouds'
+    }else{
+        weatherClass = 'night'
+    } 
+    return weatherClass
+}
+
+const setBackgroundImage = (weatherClass) =>{
+    document.documentElement.classList.add(weatherClass)
+    document.documentElement.classList.forEach(img =>{
+        if(img != weatherClass){
+            document.documentElement.classList.remove(img)
+        }
+    })
+}
+
+const buidScreenReaderWeather = (weatherJson, locationObj) => {
+    const location = locationObj.getName()
+    const unit = locationObj.getUnit()
+    const temperatureUnit = unit === 'imperial' ? 'F' : 'C'
+    return `
+        ${weatherJson.current.weather[0].description} and 
+        ${Math.round(Number(weatherJson.current.temp))}°
+        ${temperatureUnit} in ${location}
+    `
+}
+
+const setFocusOnSearch = () => {
+    document.getElementById('searchBar__text').focus()
 }
