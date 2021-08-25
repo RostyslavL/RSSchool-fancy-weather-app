@@ -54,7 +54,7 @@ export const updateDisplay =(weatherJson, locationObj) => {
 
     setBackgroundImage(weatherClass)
 
-    const screenReaderWeather = buidScreenReaderWeather(weatherJson, locationObj)
+    const screenReaderWeather = buildScreenReaderWeather(weatherJson, locationObj)
 
     updateScreenReaderConfirmation(screenReaderWeather)
 
@@ -125,7 +125,7 @@ const setBackgroundImage = (weatherClass) =>{
     })
 }
 
-const buidScreenReaderWeather = (weatherJson, locationObj) => {
+const buildScreenReaderWeather = (weatherJson, locationObj) => {
     const location = locationObj.getName()
     const unit = locationObj.getUnit()
     const temperatureUnit = unit === 'imperial' ? 'F' : 'C'
