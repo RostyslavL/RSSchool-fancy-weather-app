@@ -43,3 +43,37 @@ const updateWeatherLocationHeader = (message) => {
 export const updateScreenReaderConfirmation = (message) => {
     document.getElementById('confirmation').textContent = message
 }
+
+export const updateDisplay =(weatherJson, locationObj) => {
+    fadeDisplay()
+    clearDisplay()
+
+
+    fadeDisplay()
+}
+
+const fadeDisplay = () => {
+    const currentConditions = document.getElementById('currentForecast')
+    currentConditions.classList.toggle('zero-vis')
+    currentConditions.classList.toggle('fade-in')
+
+    const sixDayForecast = document.getElementById('dailyForecast')
+    sixDayForecast.classList.toggle('zero-vis')
+    sixDayForecast.classList.toggle('fade-in')
+}
+
+const clearDisplay = () => {
+    const currentConditions = document.getElementById('currentForecast__conditions')
+    deleteContents(currentConditions)
+
+    const sixDayForecast = document.getElementById('dailyForecast__contents')
+    deleteContents(sixDayForecast)
+}
+
+const deleteContents = (parentElement) => {
+    let childEl = parentElement.lastElementChild
+    while(childEl){
+        parentElement.removeChild(childEl)
+        childEl = parentElement.lastElementChild
+    }
+}
