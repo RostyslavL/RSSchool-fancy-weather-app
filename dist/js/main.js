@@ -1,10 +1,18 @@
 import CurrentLocation from'./CurrentLocation.js'
+
 import {
     addSpinner,
     displayError,
     updateScreenReaderConfirmation
 } from'./domFunctions.js'
-import {setLocationObject, getHomeLocation} from'./dataFunctions.js'
+
+import {
+    setLocationObject,
+    getHomeLocation,
+    getCoordsFromApi,
+    cleanText,
+    getWeatherFromCoords
+} from './dataFunctions.js'
 
 const currentLoc = new CurrentLocation()
 
@@ -19,11 +27,14 @@ const initApp = () =>{
     const saveButton = document.getElementById('saveLocation')
     saveButton.addEventListener('click', saveLocation)
 
-    const unitButton = document.getElementById('unit')
+    const unitButton = document.getElementById('units')
     unitButton.addEventListener('click', setUnitPref)
 
     const refreshButton = document.getElementById('refresh')
     refreshButton.addEventListener('click', refreshWheather)
+
+    const locationEntry = document.getElementById('searchBar__form')
+    locationEntry.addEventListener("submit", submitNewLocation)
 
     // set up
 
@@ -118,10 +129,37 @@ const refreshWheather = () =>{
     addSpinner(refreshIcon)
     updateDataAndDisplay(currentLoc)
 }
-      
+
+const submitNewLocation = async (event) => {
+    event.preventDefault()
+    const text = document.getElementById('searchBar__text').value
+    const entryText = cleanText(text)
+    if (!entryText.length) return
+    const locationIcon = document.querySelector(".fa-search")
+    addSpinner(locationIcon)
+    const coordsData = await getCoordsFromApi(entryText, currentLoc.getUnit())
+    if (coordsData) {
+      if (coordsData.cod === 200) {
+        const myCoordsObj = {
+          lat: coordsData.coord.lat,
+          lon: coordsData.coord.lon,
+          name: coordsData.sys.country
+            ? `${coordsData.name}, ${coordsData.sys.country}`
+            : coordsData.name
+        }
+        setLocationObject(currentLoc, myCoordsObj)
+        updateDataAndDisplay(currentLoc)
+      } else {
+        displayApiError(coordsData)
+      }
+    } else {
+      displayError('Connection Error', 'Connection Error')
+    }
+} 
+
 const updateDataAndDisplay = async (locationObj) =>{
-    console.log(locationObj)
-    // const weatherJson = await getWeatherFromCoords(locationobj)
+    const weatherJson = await getWeatherFromCoords(locationObj)
+    console.log(weatherJson)
     // if(weatherJson) updateDisplay(weatherJson, locationObj)
 }
 
