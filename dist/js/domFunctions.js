@@ -62,6 +62,7 @@ export const updateDisplay =(weatherJson, locationObj) => {
 
     // currentConditions To be displayed:
 
+    const currentConditionsArray = createCurrentConditionsDivs(weatherJson, locationObj.getUnit())
     // Six Day Forecast To be displayed:
 
     setFocusOnSearch()
@@ -138,4 +139,20 @@ const buildScreenReaderWeather = (weatherJson, locationObj) => {
 
 const setFocusOnSearch = () => {
     document.getElementById('searchBar__text').focus()
+}
+
+const createCurrentConditionsDivs = (weatherJson, unit) =>{
+    const temperatureUnit = unit === 'imperial' ? 'F' : 'C'
+    const windUnit = unit === 'imperial' ? 'mph' : 'm/s'
+    const icon = createMainImageDiv(weatherJson.current.weather[0].icon, weatherJson.current.weather[0].description)
+}
+
+const createMainImageDiv = (icon, altText) => {
+    const iconDiv = createElem('div','icon')
+    iconDiv.id = 'icon'
+    const faIcon = translateIconToFontAwesome(icon)
+    faIcon.ariaHidden = true
+    faIcon.title = altText
+    iconDiv.appendChild(faIcon)
+    return iconDiv
 }
