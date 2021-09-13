@@ -144,11 +144,11 @@ const setFocusOnSearch = () => {
     document.getElementById('searchBar__text').focus()
 }
 
-const createCurrentConditionsDivs = (weatherJson, unit) =>{
+const createCurrentConditionsDivs = (weatherObject, unit) =>{
     const temperatureUnit = unit === 'imperial' ? 'F' : 'C'
     const windUnit = unit === 'imperial' ? 'mph' : 'm/s'
-    const icon = createMainImageDiv(weatherJson.current.weather[0].icon, weatherJson.current.weather[0].description)
-    const temp = createElem('div', 'temp', `${Math.round(Number(weatherObject.current.temp))}°`)
+    const icon = createMainImageDiv(weatherObject.current.weather[0].icon, weatherObject.current.weather[0].description)
+    const temp = createElem('div','temp',`${Math.round(Number(weatherObject.current.temp))}°`, temperatureUnit)
     const properDesc = toProperCase(weatherObject.current.weather[0].description)
     const desc = createElem('div', 'desc', properDesc)
     const feels = createElem('div', 'feels', `Feels Like ${Math.round(Number(weatherObject.current.feels_like))}°`)
@@ -186,8 +186,8 @@ const createElem = (elemType, divClassName, divText, unit) => {
 
 const translateIconToFontAwesome = (icon) =>{
     const i = document.createElement('i')
-    const firstTwoChars = i.slice(0,2)
-    const lastChar = i.slice(2)
+    const firstTwoChars = icon.slice(0,2)
+    const lastChar = icon.slice(2)
     switch (firstTwoChars) {
         case '01':
             // Cheking if it's a day or a night time 
