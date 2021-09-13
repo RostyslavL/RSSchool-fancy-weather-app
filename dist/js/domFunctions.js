@@ -219,4 +219,5 @@ const translateIconToFontAwesome = (icon) =>{
         default:
             i.classList.add('far', 'fa-question-circle')
     }
+    return i
 }
