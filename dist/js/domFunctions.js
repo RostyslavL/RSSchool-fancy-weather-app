@@ -44,7 +44,7 @@ export const updateScreenReaderConfirmation = (message) => {
     document.getElementById('confirmation').textContent = message
 }
 
-export const updateDisplay =(weatherJson, locationObj) => {
+export const updateDisplay = (weatherJson, locationObj) => {
 
     fadeDisplay()
 
@@ -63,6 +63,9 @@ export const updateDisplay =(weatherJson, locationObj) => {
     // currentConditions To be displayed:
 
     const currentConditionsArray = createCurrentConditionsDivs(weatherJson, locationObj.getUnit())
+
+    displayCurrentConditions(currentConditionsArray)
+
     // Six Day Forecast To be displayed:
 
     setFocusOnSearch()
@@ -220,4 +223,12 @@ const translateIconToFontAwesome = (icon) =>{
             i.classList.add('far', 'fa-question-circle')
     }
     return i
+}
+
+const displayCurrentConditions = (currentConditionsArray) =>{
+    const currentConditionsContainer = document.getElementById('currentForecast__conditions')
+    currentConditionsArray.forEach(cond =>{
+        currentConditionsContainer.appendChild(cond)
+    })
+
 }
