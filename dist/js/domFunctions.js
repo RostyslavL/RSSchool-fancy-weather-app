@@ -145,6 +145,15 @@ const createCurrentConditionsDivs = (weatherJson, unit) =>{
     const temperatureUnit = unit === 'imperial' ? 'F' : 'C'
     const windUnit = unit === 'imperial' ? 'mph' : 'm/s'
     const icon = createMainImageDiv(weatherJson.current.weather[0].icon, weatherJson.current.weather[0].description)
+    const temp = createElem('div', 'temp', `${Math.round(Number(weatherObject.current.temp))}°`)
+    const properDesc = toProperCase(weatherObject.current.weather[0].description)
+    const desc = createElem('div', 'desc', properDesc)
+    const feels = createElem('div', 'feels', `Feels Like ${Math.round(Number(weatherObject.current.feels_like))}°`)
+    const maxTemp = createElem('div', 'maxTemp',`High ${Math.round(Number(weatherObject.daily[0].temp.max))}°`)
+    const minTemp = createElem('div', 'minTemp',`Low ${Math.round(Number(weatherObject.daily[0].temp.min))}°`)
+    const humidity = createElem('div', 'humidity',`Humidity ${weatherObject.current.humidity}%`)
+    const wind = createElem('div', 'wind',`Wind ${Math.round(Number(weatherObject.current.wind_speed))} ${windUnit}`)
+    return [icon,temp,desc,feels,maxTemp,minTemp,humidity,wind]
 }
 
 const createMainImageDiv = (icon, altText) => {
