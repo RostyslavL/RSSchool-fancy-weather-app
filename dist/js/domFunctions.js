@@ -156,3 +156,18 @@ const createMainImageDiv = (icon, altText) => {
     iconDiv.appendChild(faIcon)
     return iconDiv
 }
+
+const createElem = (elemType, divClassName, divText, unit) => {
+    const div = document.createElement(elemType) 
+    div.className = divClassName
+    if(divText) {
+        div.textContent = divText
+    }
+    if(divClassName === 'temp'){
+        const unitDiv = document.createElement('div')
+        unitDiv.classList.add('unit')
+        unitDiv.textContent = unit
+        div.appendChild(unitDiv)
+    }
+    return div
+}
