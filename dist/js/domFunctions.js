@@ -180,3 +180,43 @@ const createElem = (elemType, divClassName, divText, unit) => {
     }
     return div
 }
+
+const translateIconToFontAwesome = (icon) =>{
+    const i = document.createElement('i')
+    const firstTwoChars = i.slice(0,2)
+    const lastChar = i.slice(2)
+    switch (firstTwoChars) {
+        case '01':
+            // Cheking if it's a day or a night time 
+            lastChar === 'd' ? (i.classList.add('far', 'fa-sun')) : (i.classList.add('far', 'fa-moon'))
+        break
+        case '02':
+            // Cheking if it's a day or a night time 
+            lastChar === 'd' ? (i.classList.add('fas', 'fa-cloud-sun')) : (i.classList.add('fas', 'fa-cloud-moon'))
+        break 
+        case '03':
+            i.classList.add('fas', 'fa-cloud')
+        break 
+        case '04':
+            i.classList.add('fas', 'fa-cloud-meatball')
+        break 
+        case '09':
+            i.classList.add('fas', 'fa-cloud-rain')
+        break
+        case '10':
+            // Cheking if it's a day or a night time 
+            lastChar === 'd' ? (i.classList.add('far', 'fa-cloud-sun-rain')) : (i.classList.add('far', 'fa-cloud-moon-rain'))
+        break
+        case '11':
+            i.classList.add('fas', 'fa-poo-storm')
+        break
+        case '13':
+            i.classList.add('far', 'fa-snowflake')
+        break
+        case '50':
+            i.classList.add('fas', 'fa-smog')
+        break
+        default:
+            i.classList.add('far', 'fa-question-circle')
+    }
+}
