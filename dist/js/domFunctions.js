@@ -76,6 +76,8 @@ export const updateDisplay = (weatherJson, locationObj) => {
 
     displayCurrentConditions(currentConditionsArray)
 
+    displaySixDayForecast(weatherJson)
+
     // Six Day Forecast To be displayed:
 
     setFocusOnSearch()
@@ -241,4 +243,45 @@ const displayCurrentConditions = (currentConditionsArray) =>{
         currentConditionsContainer.appendChild(cond)
     })
 
+}
+
+const displaySixDayForecast = (weatherJson) => {
+    for(let i = 1; i <= 6; i++){
+        const dailyForecastArr = createDailyForecastDivs(weatherJson.daily[i])
+        displayDaylyForecast(dailyForecastArr)
+    }
+}
+
+const createDailyForecastDivs = (dayWeather) =>{
+    const dayAbbreviationText = getDayAbbreviation(dayWeather.dt)
+    const dayAbbreviation = createElem('div', 'dayAbbreviation', dayAbbreviationText)
+    const dayIcon = createDailyForecastIcon(dayWeather.weather[0].icon,dayWeather.weather[0].description)
+    const dayHight = createElem('p', 'dayHigh', `${Math.round(Number(dayWeather.temp.max))}°`)
+    const dayLow = createElem('p', 'dayLow', `${Math.round(Number(dayWeather.temp.min))}°`)
+    return [dayAbbreviation,dayIcon,dayHight,dayLow]
+}
+
+//fn to parsse standart abbreviation of days of a week
+const getDayAbbreviation = (data) =>{
+    const dateObj = new Date(data * 1000)
+    const utcString = dateObj.toUTCString()
+    return utcString.slice(0, 3).toLocaleUpperCase()
+}
+
+const createDailyForecastIcon = (icon, altText) => {
+    const img = document.createElement('img')
+    if(window.innerHeight < 768 || window.innerHeight < 1025){
+        img.src = `https://openweathermap.org/img/wn/${icon}.png`
+    }else{
+        img.src = `https://openweathermap.org/img/wn/${icon}@2x.png`
+    }
+    img.alt = altText
+    return img
+}
+
+const displayDaylyForecast = (dailyForecastArr) =>{
+    const dayDiv = createElem('div', 'forecastDay')
+    dailyForecastArr.forEach(day => dayDiv.appendChild(day))
+    const dailyForecastContainer = document.getElementById('dailyForecast__contents')
+    dailyForecastContainer.appendChild(dayDiv)
 }
